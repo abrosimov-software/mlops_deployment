@@ -45,7 +45,9 @@ async def predict(data: InputData):
     prediction = model.predict(processed_input)
     
     # Post-process the output using target preprocessor
-    final_output = target_preprocessor.inverse_transform(prediction)
+    # final_output = target_preprocessor.inverse_transform(prediction)
+    # //TODO - this is not the best way to do it, will fix it later (maybe)
+    final_output = target_preprocessor.transformers_[0][1]["transformer"].inverse_transform(prediction.reshape(-1, 1))
 
     # Return result
     return {"prediction": final_output.tolist()}
