@@ -1,0 +1,91 @@
+data_source: "data/raw/data.csv"
+remote_storage: "data/preprocessed/"
+
+data_description:
+  features: [
+    Age,
+    Gender,
+    Education,
+    Introversion Score,
+    Sensing Score,
+    Thinking Score,
+    Judging Score,
+    Interest
+  ]
+  targets: [Personality]
+  feature_expectations:
+    Age:
+      type: "continuous"
+      min: 18
+      max: 57
+      mean: 26.3
+    Gender:
+      type: "categorical"
+      categories: ["Male", "Female"]
+      most_frequent: "Male"
+    Education:
+      type: "categorical"
+      categories: [0, 1]
+      most_frequent: 0
+    Introversion Score:
+      type: "continuous"
+      min: 0
+      max: 10
+      mean: 5
+    Sensing Score:
+      type: "continuous"
+      min: 0
+      max: 10
+      mean: 5
+    Thinking Score:
+      type: "continuous"
+      min: 0
+      max: 10
+      mean: 5
+    Judging Score:
+      type: "continuous"
+      min: 0
+      max: 10
+      mean: 5
+    Interest:
+      type: "categorical"
+      categories: ["Unknown", "Arts", "Others", "Technology", "Sports"]
+      most_frequent: "Unknown"
+
+
+data_preprocessing:
+  features_transformations:
+    Age:
+      imputer: "mean"
+      transformer: "standard"
+    Gender:
+      imputer: "most_frequent"
+      transformer: "ordinal"
+    Education:
+      imputer: "most_frequent"
+      transformer: "None"
+    Introversion Score:
+      imputer: "most_frequent"
+      transformer: "MinMax"
+    Sensing Score:
+      imputer: "mean"
+      transformer: "standard"
+    Thinking Score:
+      imputer: "most_frequent"
+      transformer: "MinMax"
+    Judging Score:
+      imputer: "mean"
+      transformer: "standard"
+    Interest:
+      imputer: "most_frequent"
+      transformer: "oh_encoder"
+  targets_transformations:
+    Personality:
+      imputer: "most_frequent"
+      transformer: "ordinal"
+  preprocessors:
+    features_preprocessor_path: models/preprocessors/features_preprocessor.pkl
+    targets_preprocessor_path: models/preprocessors/targets_preprocessor.pkl
+data_splitting:
+  test_size: 0.2
+  random_state: 42

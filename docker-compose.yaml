@@ -1,0 +1,24 @@
+services:
+  api:
+    build:
+      context: ./src/deployment/api
+      dockerfile: Dockerfile
+    volumes:
+      - ./models:/app/models
+      - ./config:/app/config
+    environment:
+      - PORT=8000
+
+  streamlit:
+    build:
+      context: ./src/deployment/app
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./config:/app/config
+    depends_on:
+      - api
+    environment:
+      - FASTAPI_URL=http://api:8000
+      - PORT=8501

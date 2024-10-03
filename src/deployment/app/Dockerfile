@@ -1,0 +1,26 @@
+# src/deployment/app/Dockerfile
+
+# Base image for Python
+FROM python:3.9-slim
+# FROM aminehy/docker-streamlit-app:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy Streamlit code
+COPY . /app
+
+# Install required libraries
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Healthcheck to ensure the container is running
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost:${PORT}/ || exit 1
+
+# Expose the Streamlit port
+EXPOSE ${PORT}
+
+# Command to run Streamlit
+# CMD ["streamlit", "run", "streamlit_app.py", "--server.port=${PORT}", "--server.enableCORS=false"]
+CMD ["sh", "-c", "streamlit run streamlit_app.py --server.port=${PORT} --server.enableCORS=false"]
