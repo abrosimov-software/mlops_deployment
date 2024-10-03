@@ -1,5 +1,0 @@
-fastapi
-uvicorn[standard]
-pyyaml
-pandas
-scikit-learn

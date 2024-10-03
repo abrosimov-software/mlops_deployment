@@ -1,0 +1,16 @@
+experiments:
+  - name: experiment_1
+    model: HistGradientBoostingClassifier
+    hyperparameters:
+      learning_rate: [0.1, 0.01]
+      min_samples_leaf: [20, 40]
+    metrics:
+      - accuracy
+
+  - name: experiment_2
+    model: MLPClassifier
+    hyperparameters:
+      hidden_layer_sizes: [100, [50, 50]]
+      learning_rate: ['constant', 'adaptive']
+    metrics:
+      - accuracy

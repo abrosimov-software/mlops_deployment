@@ -1,17 +1,35 @@
 services:
+  model_engineering:
+    build:
+      context: ./stages/model_engineering
+      dockerfile: Dockerfile
+    volumes:
+      - ./models/best_model:/app/best_model
+      - ./config:/app/config
+      - ./data/preprocessed:/app/data/preprocessed
+      - ./stages/model_engineering/mlruns:/app/mlruns
+    environment:
+      - PORT=8080
+      - MLFLOW_TRACKING_URI=http://localhost:8080
+      - MLFLOW_EXPERIMENT_NAME=ml_experiment
+    ports:
+      - "8080:8080"
+
   api:
     build:
-      context: ./src/deployment/api
+      context: ./stages/deployment/api
       dockerfile: Dockerfile
     volumes:
       - ./models:/app/models
       - ./config:/app/config
     environment:
       - PORT=8000
+    depends_on:
+      - model_engineering
 
   streamlit:
     build:
-      context: ./src/deployment/app
+      context: ./stages/deployment/app
       dockerfile: Dockerfile
     ports:
       - "8501:8501"
@@ -22,3 +40,4 @@ services:
     environment:
       - FASTAPI_URL=http://api:8000
       - PORT=8501
+  

@@ -1,0 +1,20 @@
+artifact_path: HistGradientBoostingClassifier
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.9.20
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.2
+mlflow_version: 2.16.2
+model_size_bytes: 5691793
+model_uuid: 82785cb4c9ea4410955a66ef006942d7
+run_id: 74c9766e01524d7e94015a1a50ea4f90
+utc_time_created: '2024-10-03 20:17:37.755573'
